@@ -6,7 +6,12 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 from social.models import Profile, Post
-from social.serializers import ProfileSerializer, ProfileDetailSerializer, PostSerializer, PostCreateUpdateSerializer
+from social.serializers import (
+    ProfileSerializer,
+    ProfileDetailSerializer,
+    PostSerializer,
+    PostCreateUpdateSerializer,
+)
 
 PROFILE_URL = reverse("social:profile-list")
 POST_URL = reverse("social:post-list")
@@ -150,7 +155,6 @@ class ProfileTests(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_update_another_profile_forbidden(self):
-
         user = get_user_model().objects.create_user(
             "test1@test.com",
             "testpass1",
@@ -239,7 +243,6 @@ class PostsTests(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_update_another_post_forbidden(self):
-
         user = get_user_model().objects.create_user(
             "test1@test.com",
             "testpass1",

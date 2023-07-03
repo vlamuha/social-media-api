@@ -10,7 +10,7 @@ from social.serializers import (
     PostSerializer,
     ProfileDetailSerializer,
     PostCreateUpdateSerializer,
-    ProfileCreateUpdateSerializer
+    ProfileCreateUpdateSerializer,
 )
 
 
@@ -21,7 +21,10 @@ class Pagination(PageNumberPagination):
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
+    queryset = Profile.objects.all().prefetch_related(
+        "user__followers",
+        "posts",
+    )
     serializer_class = ProfileSerializer
     permission_classes = [IsProfileOwnerOrReadOnly]
     pagination_class = Pagination
