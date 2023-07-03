@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from social.models import Profile, Post
+from social.permissions import IsProfileOwnerOrReadOnly, IsPostOwnerOrReadOnly
 from social.serializers import (
     ProfileSerializer,
     PostSerializer,
@@ -12,6 +13,7 @@ from social.serializers import (
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    permission_classes = [IsProfileOwnerOrReadOnly]
 
     def get_queryset(self):
         first_name = self.request.query_params.get("first_name")
@@ -47,6 +49,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [IsPostOwnerOrReadOnly]
 
     def get_queryset(self):
         hashtag = self.request.query_params.get("hashtag")
